@@ -1,0 +1,8 @@
+/*
+!.gitignore
+!/Day*/
+
+/Day*/target/
+/Day*/.classpath
+/Day*/.project
+/Day*/.settings
