@@ -36,7 +36,7 @@ public class Main {
 	    }
 	}
     }
-    
+
     private static String shiftString(String s, int shift) {
 	s = s.toUpperCase();
 	char[] chars = s.toCharArray();
@@ -75,9 +75,12 @@ public class Main {
     }
 
     private static String getCheckSum(Map<Integer, Integer> charMap) {
-	Map<Integer, Integer> sortedMap = charMap.entrySet().stream()
-		.sorted((e1, e2) -> 1000 * (e2.getValue() - e1.getValue()) + (e1.getKey() - e2.getKey()))
-		.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+	Map<Integer, Integer> sortedMap = charMap.entrySet().stream().sorted((e1, e2) -> {
+	    int result = Integer.compare(e1.getValue(), e2.getValue());
+	    if (result != 0)
+		return result;
+	    return Integer.compare(e1.getKey(), e2.getKey());
+	}).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
 	String s = "";
 	int count = 0;
