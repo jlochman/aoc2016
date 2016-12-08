@@ -81,16 +81,16 @@ public class Main {
 	private boolean on;
 
 	public Pixel(int row, int col) {
-	    this.row = row;
-	    this.col = col;
+	    setRow(row);
+	    setCol(col);
 	}
 
 	public int getRow() {
-	    return row % NUM_ROWS;
+	    return row;
 	}
 
 	public int getCol() {
-	    return col % NUM_COLS;
+	    return col;
 	}
 
 	public boolean isOn() {
@@ -102,11 +102,11 @@ public class Main {
 	}
 
 	public void setRow(int row) {
-	    this.row = row;
+	    this.row = row % NUM_ROWS;
 	}
 
 	public void setCol(int col) {
-	    this.col = col;
+	    this.col = col % NUM_COLS;
 	}
 
     }
