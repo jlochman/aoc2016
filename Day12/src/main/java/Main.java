@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +29,22 @@ public class Main {
 
     public static class Instructions {
 
-	private List<String> instructions;
+	private Map<Integer, List<String>> instructions = new HashMap<>();
 	private Map<String, Integer> registers = new HashMap<>();
 	private int pos = 0;
 
 	public Instructions(List<String> instructions) {
-	    this.instructions = instructions;
+	    for (int i = 0; i < instructions.size(); i++) {
+		Scanner scanner = new Scanner(instructions.get(i));
+		List<String> list = new ArrayList<>();
+		list.add(scanner.next());
+		list.add(scanner.next());
+		if (scanner.hasNext()) {
+		    list.add(scanner.next());
+		}
+		this.instructions.put(i, list);
+		scanner.close();
+	    }
 	}
 
 	public void initPart1() {
@@ -60,23 +71,20 @@ public class Main {
 	}
 
 	private void processLine() {
-	    Scanner scanner = new Scanner(instructions.get(pos));
-	    String instruction = scanner.next();
-	    switch (instruction) {
+	    switch (instructions.get(pos).get(0)) {
 	    case "cpy":
-		cpy(scanner.next(), scanner.next());
+		cpy(instructions.get(pos).get(1), instructions.get(pos).get(2));
 		break;
 	    case "inc":
-		inc(scanner.next());
+		inc(instructions.get(pos).get(1));
 		break;
 	    case "dec":
-		dec(scanner.next());
+		dec(instructions.get(pos).get(1));
 		break;
 	    case "jnz":
-		jnz(scanner.next(), scanner.next());
+		jnz(instructions.get(pos).get(1), instructions.get(pos).get(2));
 		break;
 	    }
-	    scanner.close();
 	}
 
 	private void cpy(String source, String dest) {
