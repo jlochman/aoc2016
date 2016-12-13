@@ -55,13 +55,13 @@ public class AStarSearch {
      * Find the path from the start node to the end node. A list of AStarNodes
      * is returned, or null if the path is not found.
      */
-    public List<AStarNode> findPath(AStarNode startNode, AStarNode goalNode) {
+    public List<AStarNode> findPath(AStarNode startNode, AStarNode goalNode, boolean isPart2) {
 
 	PriorityList openList = new PriorityList();
 	LinkedList<AStarNode> closedList = new LinkedList<>();
 
 	startNode.costFromStart = 0;
-	startNode.estimatedCostToGoal = startNode.getEstimatedCost(goalNode);
+	startNode.estimatedCostToGoal = isPart2 ? 1 : startNode.getEstimatedCost(goalNode);
 	startNode.pathParent = null;
 	openList.add(startNode);
 
@@ -72,9 +72,9 @@ public class AStarSearch {
 	    }
 
 	    if (node.equals(goalNode)) {
-		// construct the path from start to goal
 		System.out.println("shortest path: " + (int) node.costFromStart);
-		System.out.println(visitedNodes.size());
+		System.out.println("# visited in 50 steps: " + visitedNodes.size());
+		System.out.println("_______________");
 		return constructPath(goalNode);
 	    }
 
@@ -91,7 +91,7 @@ public class AStarSearch {
 		if ((!isOpen && !isClosed) || costFromStart < neighborNode.costFromStart) {
 		    neighborNode.pathParent = node;
 		    neighborNode.costFromStart = costFromStart;
-		    neighborNode.estimatedCostToGoal = neighborNode.getEstimatedCost(goalNode);
+		    neighborNode.estimatedCostToGoal = isPart2 ? 1 : neighborNode.getEstimatedCost(goalNode);
 		    if (isClosed) {
 			closedList.remove(neighborNode);
 		    }

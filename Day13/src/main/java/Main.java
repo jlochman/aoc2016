@@ -11,8 +11,11 @@ public class Main {
 	createMaze();
 
 	AStarSearch search = new AStarSearch();
-	search.findPath(new AStarNode(1, 1), new AStarNode(31, 39));
-	// printMaze(search.getVisitedNodes());
+	
+	// part1
+	search.findPath(new AStarNode(1, 1), new AStarNode(31, 39), false);
+	// part2
+	search.findPath(new AStarNode(1, 1), new AStarNode(31, 39), true);
     }
 
     private static void createMaze() {

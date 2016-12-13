@@ -46,14 +46,10 @@ public class AStarNode implements Comparable<Object> {
      * estimate, the more effecient the search.
      */
     public float getEstimatedCost(AStarNode node) {
-	/*
 	float result = 0; 
 	result += Math.abs(node.getX() - this.getX());
 	result += Math.abs(node.getY() - this.getY());
 	return (float) result;
-	*/
-	// kvuli casti 2 jsou vsechy nody stejne daleko (neexistuje preference)
-	return 1;
     };
 
     /**
