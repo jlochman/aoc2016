@@ -80,7 +80,7 @@ public class AStarNode implements Comparable<Object> {
 
     @Override
     public int hashCode() {
-	return ("" + this.x + "," + this.y + this.path).hashCode();
+	return this.path.hashCode();
     }
 
     @Override

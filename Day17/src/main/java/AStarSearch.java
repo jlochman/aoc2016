@@ -30,9 +30,7 @@ public class AStarSearch {
     }
 
     public List<AStarNode> findPath(AStarNode startNode, AStarNode goalNode) {
-
 	PriorityList openList = new PriorityList();
-	LinkedList<AStarNode> closedList = new LinkedList<>();
 
 	startNode.costFromStart = 0;
 	startNode.estimatedCostToGoal = startNode.getEstimatedCost(goalNode);
@@ -57,22 +55,16 @@ public class AStarSearch {
 	    for (int i = 0; i < neighbors.size(); i++) {
 		AStarNode neighborNode = neighbors.get(i);
 		boolean isOpen = openList.contains(neighborNode);
-		boolean isClosed = closedList.contains(neighborNode);
 		float costFromStart = node.costFromStart + node.getCost(neighborNode);
-
-		if ((!isOpen && !isClosed) || costFromStart < neighborNode.costFromStart) {
+		if ((!isOpen) || costFromStart < neighborNode.costFromStart) {
 		    neighborNode.pathParent = node;
 		    neighborNode.costFromStart = costFromStart;
 		    neighborNode.estimatedCostToGoal = neighborNode.getEstimatedCost(goalNode);
-		    if (isClosed) {
-			closedList.remove(neighborNode);
-		    }
 		    if (!isOpen) {
 			openList.add(neighborNode);
 		    }
 		}
 	    }
-	    closedList.add(node);
 	}
 
 	System.out.println("LONGEST PATH: " + longestPath);
