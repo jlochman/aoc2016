@@ -1,55 +1,37 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+
+import org.magicwerk.brownies.collections.GapList;
 
 public class Main {
 
     private static final int INPUT = 3014603;
 
     public static void main(String[] args) {
-	System.out.println(part1());
-	System.out.println(part2());
+	Calculator.calculate((index, listSize) -> (index + 1) % listSize);
+	Calculator.calculate((index, listSize) -> (int) (index + listSize / 2) % listSize);
     }
 
-    private static int part1() {
-	List<Integer> list = fill(new LinkedList<>());
-	int shift = 1;
-	while (list.size() > 1) {
-	    Iterator<Integer> iterator = list.iterator();
-	    if (shift == 1) {
-		iterator.next();
-		shift = 0;
+    private static abstract class Calculator {
+
+	public static void calculate(CalcInterface calc) {
+	    long startTime = System.currentTimeMillis();
+	    List<Integer> list = new GapList<>(INPUT);
+	    for (int i = 1; i <= INPUT; i++) {
+		list.add(i);
 	    }
-	    while (iterator.hasNext()) {
-		iterator.next();
-		iterator.remove();
-		if (iterator.hasNext()) {
-		    iterator.next();
-		} else {
-		    shift = 1;
-		}
+	    int elfIndex = 0;
+	    while (list.size() > 1) {
+		int elfRemove = calc.getNextRemove(elfIndex, list.size());
+		list.remove(elfRemove);
+		elfIndex = ((elfRemove > elfIndex) ? elfIndex + 1 : elfIndex) % list.size();
 	    }
+	    System.out.printf("in: %d ms... RESULT: %d \n", System.currentTimeMillis() - startTime, list.get(0));
 	}
-	return list.get(0);
+
     }
 
-    private static int part2() {
-	List<Integer> list = fill(new ArrayList<>());
-	int elfIndex = 0;
-	while (list.size() > 1) {
-	    int elfRemove = (elfIndex + (int) (list.size() / 2)) % list.size();
-	    list.remove(elfRemove);
-	    elfIndex = ((elfRemove > elfIndex) ? elfIndex + 1 : elfIndex) % list.size();
-	}
-	return list.get(0);
-    }
-
-    private static List<Integer> fill(List<Integer> list) {
-	for (int i = 1; i <= INPUT; i++) {
-	    list.add(i);
-	}
-	return list;
+    private static interface CalcInterface {
+	public int getNextRemove(int elfIndex, int listSize);
     }
 
 }
