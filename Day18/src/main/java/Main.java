@@ -30,7 +30,6 @@ public class Main {
 		    i == prevRow.size() - 1 ? false : prevRow.get(i + 1)));
 	}
 	return thisRow;
-
     }
 
     private static boolean isTrap(boolean left, boolean center, boolean right) {
