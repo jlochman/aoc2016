@@ -16,19 +16,7 @@ public class Main {
 	goalNode.initGoal();
 
 	AStarSearch search = new AStarSearch();
-
-	/*
-	 * Thread forwardSearch = new Thread(() ->
-	 * {System.out.println(1);search.findPath(startNode, goalNode);});
-	 * forwardSearch.start();
-	 * 
-	 * Thread backwardSearch = new Thread(() -> {System.out.println(2);
-	 * search.findPath(goalNode, startNode);}); backwardSearch.start();
-	 */
-
-	List<Area> path = search.findPath(startNode, goalNode).stream().map(o -> (Area) o).collect(Collectors.toList());
-	System.out.println(path);
-	path.stream().forEach(a -> a.display());
+	search.findPath(startNode, goalNode);
     }
 
     private static class Area extends AStarNode {
@@ -145,17 +133,12 @@ public class Main {
 		return h;
 	    }
 	    h += elements.stream().mapToDouble(e -> getHeuristic(e)).sum();
-	    h -= NUM_FLOORS - elements.stream().mapToInt(e -> e.getFloor()).min().getAsInt();
 	    return h;
 	}
 
 	private double getHeuristic(Element e) {
-	    double result = 2 * Math.sqrt(NUM_FLOORS - e.getFloor());
-	    // int result = (int) Math.pow((NUM_FLOORS - e.getFloor()), 2);
-	    if (e.getFloor() < elFloor) {
-		result += (elFloor - e.getFloor());
-	    }
-	    return result;
+	    return NUM_FLOORS - e.getFloor();
+	    
 	}
 
 	private boolean isFriedChip(int floor) {

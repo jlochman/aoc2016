@@ -58,15 +58,6 @@ public class AStarSearch {
 	openList.add(startNode);
 
 	while (!openList.isEmpty()) {
-	    /*
-	    if (openList.size() % 100 == 0) {
-		System.out.println(openList.size());
-		System.out.println("max: " + openList.stream().map(o -> ((AStarNode) o).getCost())
-			.max((c1, c2) -> Float.compare(c1, c2)).get());
-		System.out.println("min: " + openList.stream().map(o -> ((AStarNode) o).getCost())
-			.min((c1, c2) -> Float.compare(c1, c2)).get());
-	    }
-	    */
 	    AStarNode node = (AStarNode) openList.removeFirst();
 	    if (node.equals(goalNode)) {
 		// construct the path from start to goal
